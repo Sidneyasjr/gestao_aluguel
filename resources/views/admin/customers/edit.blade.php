@@ -38,9 +38,6 @@
                     <li class="nav_tabs_item">
                         <a href="#data" class="nav_tabs_item_link active">Dados Cadastrais</a>
                     </li>
-                    <li class="nav_tabs_item">
-                        <a href="#realties" class="nav_tabs_item_link">Imóveis</a>
-                    </li>
                 </ul>
 
                 <form class="app_form" action="{{ route('admin.customers.update', ['customer' => $customer->id]) }}"
@@ -69,21 +66,6 @@
                                 </label>
                             </div>
 
-                        </div>
-                        <div id="realties" class="d-none">
-
-                            <div class="app_collapse mt-3">
-                                <div class="app_collapse_header collapse">
-                                    <h3>Locatário</h3>
-                                    <span class="icon-minus-circle icon-notext"></span>
-                                </div>
-
-                                <div class="app_collapse_content">
-                                    <div id="realties">
-                                        <div class="no-content">Não foram encontrados registros!</div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                     </div>

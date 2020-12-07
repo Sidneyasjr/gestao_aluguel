@@ -33,7 +33,7 @@ class ContractController extends Controller
      */
     public function create()
     {
-        $properties = Property::all();
+        $properties = Property::where('status', 1);
         $customers = Customer::all();
         $owners = Owner::all();
 
@@ -140,9 +140,9 @@ class ContractController extends Controller
             $properties = null;
         } else {
 
-            $getProperties = $owner->properties()->get();
+            $getProperties = $owner->properties()->available()->get();
 
-            $property = [];
+            $properties = [];
             foreach($getProperties as $property) {
                 $properties[] = [
                     'id' => $property->id,
