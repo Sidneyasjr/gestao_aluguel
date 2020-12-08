@@ -4,7 +4,7 @@
     <section class="dash_content_app">
 
         <header class="dash_content_app_header">
-            <h2 class="icon-plus-circle">Cadastrar Novo Contrato</h2>
+            <h2 class="icon-file-text">Editar Contrato</h2>
 
             <div class="dash_content_app_header_actions">
                 <nav class="dash_content_app_breadcrumb">
@@ -39,6 +39,11 @@
                 <ul class="nav_tabs">
                     <li class="nav_tabs_item">
                         <a href="#parts" class="nav_tabs_item_link active">Dados do Contrato</a>
+                    </li>
+                    <li class="nav_tabs_item">
+                        <a href="#transfer" class="nav_tabs_item_link">Repasses</a>
+                    </li><li class="nav_tabs_item">
+                        <a href="#month_pay" class="nav_tabs_item_link">Mensalidades</a>
                     </li>
                 </ul>
 
@@ -122,13 +127,13 @@
                             <div class="label_g2">
                                 <label class="label">
                                     <span class="legend">Data de Início:</span>
-                                    <input type="tel" name="start_at" class="mask-date"
+                                    <input type="date" name="start_at"
                                            placeholder="Data de Início"
                                            value="{{ old('start_at') ?? $contract->start_at }}"/>
                                 </label>
                                 <label class="label">
                                     <span class="legend">Data de Fim:</span>
-                                    <input type="tel" name="end_at" class="mask-date" placeholder="Data de Fim"
+                                    <input type="date" name="end_at" placeholder="Data de Fim"
                                            value="{{ old('end_at') ?? $contract->end_at }}"/>
                                 </label>
                             </div>
@@ -156,8 +161,62 @@
                             </div>
                         </form>
                     </div>
+                    <div id="transfer" class="d-none">
+                        <table id="dataTable" class="nowrap stripe" width="100" style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Parcela</th>
+                                <th>Locador</th>
+                                <th>Valor</th>
+                                <th>Data do Repasse</th>
+                                <th>Pago</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($transfers as $transfer)
+                                <tr>
+                                    <td>{{ $transfer->enrollment }}</td>
+                                    <td>{{ $transfer->ownerObject->name }}</td>
+                                    <td>R$ {{ $transfer->value }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
+                                    <td><input type="checkbox" name="satus" disabled
+                                            {{ $transfer->status == 'paid' ? 'checked' : ''}}>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="month_pay" class="d-none">
+                        <table id="dataTable2" class="nowrap stripe" width="100" style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Parcela</th>
+                                <th>Locatário</th>
+                                <th>Valor</th>
+                                <th>Vencimento</th>
+                                <th>Pago</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($monthPays as $monthPay)
+                                <tr>
+                                    <td>{{ $monthPay->enrollment }}</td>
+                                    <td>{{ $monthPay->customerObject->name }}</td>
+                                    <td>R$ {{ $monthPay->value }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($monthPay->due_at)) }}</td>
+                                    <td><input type="checkbox" name="satus" disabled
+                                            {{ $monthPay->status == 'paid' ? 'checked' : ''}}>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+
         </div>
     </section>
 @endsection

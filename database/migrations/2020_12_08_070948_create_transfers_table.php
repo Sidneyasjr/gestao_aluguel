@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateTransfersTable extends Migration
 {
@@ -15,16 +15,16 @@ class CreateTransfersTable extends Migration
     {
         Schema::create('transfers', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedTinyInteger('installments');
+            $table->unsignedInteger('enrollment');
             $table->unsignedInteger('contract');
-            $table->date('date_transfer');
-            $table->decimal('rent_price', 10, 2);
-            $table->decimal('adm_fee', 10, 2);
-            $table->decimal('tribute', 10, 2);
-            $table->decimal('transfer', 10, 2);
+            $table->unsignedInteger('owner');
+            $table->decimal('value', 10, 2);
+            $table->date('due_at');
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('contract')->references('id')->on('contracts')->onDelete('CASCADE');
+            $table->foreign('owner')->references('id')->on('owners')->onDelete('CASCADE');
         });
     }
 

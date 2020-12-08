@@ -104,13 +104,13 @@
                             <div class="label_g2">
                                 <label class="label">
                                     <span class="legend">Data de Início:</span>
-                                    <input type="tel" name="start_at" class="mask-date"
+                                    <input type="date" name="start_at"
                                            placeholder="Data de Início"
                                            value="{{ old('start_at') }}"/>
                                 </label>
                                 <label class="label">
                                     <span class="legend">Data de Fim:</span>
-                                    <input type="tel" name="end_at" class="mask-date" placeholder="Data de Fim"
+                                    <input type="date" name="end_at" placeholder="Data de Fim"
                                            value="{{ old('end_at') }}"/>
                                 </label>
                             </div>

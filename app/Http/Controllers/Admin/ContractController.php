@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Contract;
 use App\Customer;
+use App\MonthlyPayment;
 use App\Owner;
 use App\Property;
+use App\Transfer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Contract as ContractRequest;
@@ -54,6 +56,59 @@ class ContractController extends Controller
     public function store(ContractRequest $request)
     {
         $contractCreate = Contract::create($request->all());
+
+
+        $tribute = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->tribute)));
+        $rent_price = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->rent_price)));
+        $adm_fee = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->adm_fee)));
+        $condominium = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->condominium)));
+
+
+        $data = explode("-",$contractCreate->start_at);
+        $y = $data[0];
+        $m = $data[1];
+        $d = $data[2];
+
+        $datePay = $y . '-' . $m . '-' . 1;
+        $datePay = date("Y-m-d", strtotime($datePay . "+1month"));
+        /** Mensalidades */
+        for ($enrollment = 0; $enrollment < 12 ; $enrollment++) {
+            $value = $rent_price + $tribute + $condominium;
+            if ($enrollment == 0){
+                $value = ($value / 30) * (31 - $d);
+                $value = round($value, 2);
+            }
+            $monthlyPayCreate = MonthlyPayment::create([
+                'enrollment' => $enrollment + 1,
+                'contract' => $contractCreate->id,
+                'customer' => $contractCreate->customer,
+                'value' => $value,
+                'due_at' => date("Y-m-d", strtotime($datePay . "+{$enrollment}month")),
+                'status' => 'unpaid'
+            ]);
+        }
+
+        /** Repasse*/
+
+        $dateTransfer = $y . '-' . $m . '-' . $contractCreate->ownerObject->day_transfer;
+        $dateTransfer = date("Y-m-d", strtotime($dateTransfer . "+1month"));
+//        dd($dateTransfer, $datePay);
+        for ($enrollment = 0; $enrollment < 12 ; $enrollment++) {
+            $value = $tribute + $rent_price - $adm_fee;
+            if ($enrollment == 0){
+                $value = ($value / 30) * (30 - $contractCreate->ownerObject->day_transfer);
+                $value = round($value, 2);
+            }
+            $transferCreate = Transfer::create([
+                'enrollment' => $enrollment + 1,
+                'contract' => $contractCreate->id,
+                'owner' => $contractCreate->owner,
+                'value' => $value,
+                'due_at' => date("Y-m-d", strtotime($dateTransfer . "+{$enrollment}month")),
+                'status' => 'unpaid'
+            ]);
+        }
+
          return redirect()->route('admin.contracts.edit', [
             'contract' => $contractCreate->id
         ])->with(['color' => 'green', 'message' => 'Contrato cadastrado com sucesso!']);
@@ -81,11 +136,15 @@ class ContractController extends Controller
         $owners = Owner::all();
         $customers = Customer::all();
         $contract = Contract::where('id', $id)->first();
+        $transfers = Transfer::where('contract', $id)->get();
+        $monthPays = MonthlyPayment::where('contract', $id)->get();
 
         return view('admin.contracts.edit', [
             'owners' => $owners,
             'customers' => $customers,
-            'contract' => $contract
+            'contract' => $contract,
+            'transfers' => $transfers,
+            'monthPays' => $monthPays
         ]);
     }
 

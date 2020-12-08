@@ -12,6 +12,11 @@ class Customer extends Model
         'telephone'
     ];
 
+    public function monthPay()
+    {
+        return $this->hasMany(MonthlyPayment::class, 'customer', 'id');
+    }
+
     public function getTelephoneAttribute($value)
     {
         if (empty($value)) {

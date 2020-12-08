@@ -39,8 +39,8 @@
                             <td><a href="{{ route('admin.contracts.edit', ['contract' => $contract->id]) }}" class="text-orange">{{ $contract->id }}</a></td>
                             <td><a href="{{ route('admin.contracts.edit', ['contract' => $contract->id]) }}" class="text-orange">{{ $contract->ownerObject->name }}</a></td>
                             <td><a href="{{ route('admin.contracts.edit', ['contract' => $contract->id]) }}" class="text-orange">{{ $contract->customerObject->name }}</a></td>
-                            <td>{{ $contract->start_at }}</td>
-                            <td>{{ $contract->end_at }}</td>
+                            <td>{{ date('d/m/Y', strtotime($contract->start_at)) }}</td>
+                            <td>{{ date('d/m/Y', strtotime($contract->end_at)) }}</td>
                         </tr>
                     @endforeach
                     </tbody>

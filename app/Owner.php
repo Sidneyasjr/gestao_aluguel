@@ -22,6 +22,12 @@ class Owner extends Model
         return $this->hasMany(Property::class, 'owner', 'id');
     }
 
+    public function transfer()
+    {
+        return $this->hasMany(Transfer::class, 'owner', 'id');
+    }
+
+
     public function getTelephoneAttribute($value)
     {
         if (empty($value)) {
