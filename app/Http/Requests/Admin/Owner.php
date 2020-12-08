@@ -26,7 +26,7 @@ class Owner extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:191',
-            'email' => 'required|email',
+            'email' => (!empty($this->request->all()['id']) ? 'required|email|unique:users,email,' . $this->request->all()['id'] : 'required|email|unique:users,email'),
             'telephone' => 'required',
             'day_transfer' => 'required|integer|min:1|max:28'
         ];

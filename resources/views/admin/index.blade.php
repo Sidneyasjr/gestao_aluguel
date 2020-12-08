@@ -28,7 +28,7 @@
             <form name="login" action="{{ route('admin.login.do') }}" method="post" autocomplete="off">
                 <label>
                     <span class="field icon-envelope">E-mail:</span>
-                    <input type="email" name="email" placeholder="Informe seu e-mail" value="sidney@sidneyandrade.com.br"/>
+                    <input type="email" name="email" placeholder="Informe seu e-mail" value="admin@admin.com.br"/>
                 </label>
 
                 <label>

@@ -88,7 +88,7 @@ class CustomerController extends Controller
 
 
         return redirect()->route('admin.customers.edit', [
-            'company' => $customer->id,
+            'customer' => $customer->id,
         ])->with(['color' => 'green', 'message' => 'Cliente atualizado com sucesso!']);
     }
 

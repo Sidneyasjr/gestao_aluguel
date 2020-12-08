@@ -85,7 +85,7 @@ class OwnerController extends Controller
         $owner->save();
 
         return redirect()->route('admin.owners.edit', [
-            'company' => $owner->id,
+            'owner' => $owner->id,
         ])->with(['color' => 'green', 'message' => 'Proprietário atualizado com sucesso!']);
     }
 

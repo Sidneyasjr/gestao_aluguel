@@ -140,7 +140,8 @@ class ContractController extends Controller
             $properties = null;
         } else {
 
-            $getProperties = $owner->properties()->available()->get();
+
+            $getProperties = $owner->properties()->get();
 
             $properties = [];
             foreach($getProperties as $property) {

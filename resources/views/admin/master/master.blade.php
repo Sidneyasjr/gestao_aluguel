@@ -45,7 +45,8 @@
             <img class="dash_sidebar_user_thumb" src="{{ $cover }}" alt="" title=""/>
 
             <h1 class="dash_sidebar_user_name">
-                <a href="{{ route('admin.users.edit', ['user' => \Illuminate\Support\Facades\Auth::user()->id]) }}">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
+                <a href="{{ route('admin.users.edit', ['user' => \Illuminate\Support\Facades\Auth::user()->id]) }}">
+                    {{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
             </h1>
         </article>
 
@@ -89,15 +90,15 @@
                             href="{{ route('admin.contracts.create') }}">Criar Novo</a></li>
                 </ul>
             </li>
-{{--            <li class="dash_sidebar_nav_item {{ isActive('admin.users') }}"><a class="icon-users"--}}
-{{--                                                                               href="{{ route('admin.users.index') }}">Usuários</a>--}}
-{{--                <ul class="dash_sidebar_nav_submenu">--}}
-{{--                    <li class="{{ isActive('admin.users.index') }}"><a href="{{ route('admin.users.index') }}">Ver--}}
-{{--                            Todos</a></li>--}}
-{{--                    <li class="{{ isActive('admin.users.create') }}"><a href="{{ route('admin.users.create') }}">Criar--}}
-{{--                            Novo</a></li>--}}
-{{--                </ul>--}}
-{{--            </li>--}}
+            <li class="dash_sidebar_nav_item {{ isActive('admin.users') }}"><a class="icon-users"
+                                                                               href="{{ route('admin.users.index') }}">Usuários</a>
+                <ul class="dash_sidebar_nav_submenu">
+                    <li class="{{ isActive('admin.users.index') }}"><a href="{{ route('admin.users.index') }}">Ver
+                            Todos</a></li>
+                    <li class="{{ isActive('admin.users.create') }}"><a href="{{ route('admin.users.create') }}">Criar
+                            Novo</a></li>
+                </ul>
+            </li>
             <li class="dash_sidebar_nav_item"><a class="icon-sign-out on_mobile" href="{{ route('admin.logout') }}"
                                                  target="_blank">Sair</a></li>
         </ul>

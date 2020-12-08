@@ -40,7 +40,7 @@ class User extends FormRequest
             'document' => (!empty($this->request->all()['id']) ? 'required|min:11|max:14|unique:users,document,' . $this->request->all()['id'] : 'required|min:11|max:14|unique:users,document'),
 
             'email' => (!empty($this->request->all()['id']) ? 'required|email|unique:users,email,' . $this->request->all()['id'] : 'required|email|unique:users,email'),
-//            'password' => (empty($this->request->all()['id']) ? 'required' : ''),
+            'password' => (empty($this->request->all()['id']) ? 'required' : ''),
 
         ];
     }

@@ -106,7 +106,7 @@ class UserController extends Controller
         }
 
         return redirect()->route('admin.users.edit', [
-            'users' => $user->id
+            'user' => $user->id
         ])->with(['color' => 'green', 'message' => 'Usuário atualizado com sucesso!']);
     }
 

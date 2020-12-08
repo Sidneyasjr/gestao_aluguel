@@ -20,6 +20,7 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
 
     /** Rotas Protegidas*/
     Route::group(['middleware' => ['auth']], function(){
+
         /** Deshboard Home */
         Route::get('home', 'AuthController@home' )->name('home');
 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AdminUserTableSeeder extends Seeder
 {
@@ -16,7 +17,9 @@ class AdminUserTableSeeder extends Seeder
             'email' => env('ADMIN_EMAIL'),
             'email_verified_at' => now(),
             'password' => bcrypt(env('ADMIN_PASS')),
-            'remember_token' => \Illuminate\Support\Str::random(10)
+            'remember_token' => \Illuminate\Support\Str::random(10),
+            'document' => '',
+            'cover' => ''
         ]);
     }
 }
