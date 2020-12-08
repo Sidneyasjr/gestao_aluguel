@@ -112,7 +112,7 @@
                 <div class="dash_userbar_box_content">
                     <span class="icon-align-justify icon-notext mobile_menu transition btn btn-green"></span>
                     <h1 class="transition">
-                        <i class="icon-imob text-orange"></i><a href="">S A <b>Imóveis</b></a>
+                        <i class="icon-imob text-orange"></i><a href="">S A <b>Imóveis - Gestão de Alugueis</b></a>
                     </h1>
                     <div class="dash_userbar_box_bar no_mobile">
                         <a class="text-red icon-sign-out" href="{{ route('admin.logout') }}">Sair</a>
