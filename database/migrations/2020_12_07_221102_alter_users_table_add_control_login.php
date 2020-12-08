@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AlterUsersTable extends Migration
+class AlterUsersTableAddControlLogin extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AlterUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('document')->unique();
+            $table->datetime('last_login_at')->nullable();
+            $table->string('last_login_ip')->nullable();
         });
     }
 
@@ -26,7 +27,8 @@ class AlterUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('document');
+            $table->dropColumn('last_login_at');
+            $table->dropColumn('last_login_ip');
         });
     }
 }
