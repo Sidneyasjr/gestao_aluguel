@@ -176,11 +176,15 @@
                             <tbody>
                             @foreach($rents as $rent)
                                 <tr>
-                                    <td>{{ $rent->enrollment }}</td>
-                                    <td>{{ $rent->customerObject->name }}</td>
-                                    <td>R$ {{ $rent->value }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
-                                    <td><input type="checkbox" name="satus" disabled
+                                    <td><a href="{{ route('admin.rents.index') }}"
+                                           class="text-orange">{{ $rent->enrollment }}</td>
+                                    <td><a href="{{ route('admin.rents.index') }}"
+                                           class="text-orange">{{ $rent->customerObject->name }}</td>
+                                    <td><a href="{{ route('admin.rents.index') }}"
+                                           class="text-orange">R$ {{ $rent->value }}</td>
+                                    <td><a href="{{ route('admin.rents.index') }}"
+                                           class="text-orange">{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
+                                    <td><input type="checkbox" name="status" disabled
                                             {{ $rent->status == 'paid' ? 'checked' : ''}}>
                                     </td>
                                 </tr>
@@ -202,13 +206,16 @@
                             <tbody>
                             @foreach($transfers as $transfer)
                                 <tr>
-                                    <td>{{ $transfer->enrollment }}</td>
-                                    <td>{{ $transfer->ownerObject->name }}</td>
-                                    <td>R$ {{ $transfer->value }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
-                                    <td><input type="checkbox" name="satus" disabled
-                                            {{ $transfer->status == 'paid' ? 'checked' : ''}}>
-                                    </td>
+                                    <td><a href="{{ route('admin.transfers.index') }}"
+                                           class="text-orange">{{ $transfer->enrollment }}</td>
+                                    <td><a href="{{ route('admin.transfers.index') }}"
+                                           class="text-orange">{{ $transfer->ownerObject->name }}</td>
+                                    <td><a href="{{ route('admin.transfers.index') }}"
+                                           class="text-orange">R$ {{ $transfer->value }}</td>
+                                    <td><a href="{{ route('admin.transfers.index') }}"
+                                           class="text-orange">{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
+                                    <td><input type="checkbox" name="status" disabled
+                                            {{ $transfer->status == 'paid' ? 'checked' : ''}}></td>
                                 </tr>
                             @endforeach
                             </tbody>

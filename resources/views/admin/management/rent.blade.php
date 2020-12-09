@@ -51,8 +51,7 @@
                         <tr>
                             <td>{{ $rent->enrollment }}</td>
                             <td>{{ $rent->customerObject->name }}</td>
-                            <td><a href="{{ route('admin.contracts.edit', ['contract' => $rent->contract]) }}"
-                                   class="text-orange">Nº {{ $rent->contract }}</td>
+                            <td><a href="{{ route('admin.contracts.edit', ['contract' => $rent->contract]) }}" class="text-orange">Nº {{ $rent->contract }}</td>
                             <td>R$ {{ $rent->value }}</td>
                             <td>{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
                             <td>

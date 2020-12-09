@@ -33,6 +33,13 @@ class AuthController extends Controller
         $rents = Rent::where('status', 'unpaid')->orderBy('due_at', 'ASC')->limit(10)->get();
         $transfers = Transfer::where('status', 'unpaid')->orderBy('enrollment', 'ASC')->limit(10)->get();
 
+        $rentsUnpaid = Rent::where('status', 'unpaid')->sum('value');
+        $rentsUnpaid = number_format($rentsUnpaid, 2, ',', '.');
+
+        $transferUnpaid = Transfer::where('status', 'unpaid')->sum('value');
+        $transferUnpaid = number_format($transferUnpaid, 2, ',', '.');
+
+
         $propertiesAvailable = Property::available()->count();
         $propertiesUnavailable = Property::unavailable()->count();
         $propertiesTotal = Property::all()->count();
@@ -51,7 +58,9 @@ class AuthController extends Controller
             'contractsTotal' => $contractsTotal,
             'contracts' => $contracts,
             'rents' => $rents,
-            'transfers' => $transfers
+            'transfers' => $transfers,
+            'rentsUnpaid' => $rentsUnpaid,
+            'transferUnpaid' => $transferUnpaid
 
         ]);
     }

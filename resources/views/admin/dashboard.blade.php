@@ -25,6 +25,8 @@
                     <article class="users radius">
                         <h4 class="icon-file-text">Contratos</h4>
                         <p><b>Oficializados:</b> {{ $contractsTotal }}</p>
+                        <p><b>Mensalidades a receber:</b> R$ {{ $rentsUnpaid }}</p>
+                        <p><b>Repasses a pagar:</b> R$ {{ $transferUnpaid }}</p>
                     </article>
                 </section>
             </div>
@@ -32,7 +34,7 @@
 
         <section class="dash_content_app" style="margin-top: 40px;">
             <header class="dash_content_app_header">
-                <h2 class="icon-tachometer">Mensalidade com com Parcelas em aberto</h2>
+                <h2 class="icon-tachometer">Mensalidade em aberto</h2>
             </header>
 
             <div class="dash_content_app_box">
@@ -42,21 +44,19 @@
                         <tr>
                             <th>Parcela</th>
                             <th>Locatário</th>
+                            <th>Contrato</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
-                            <th>Pago</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($rents as $rent)
                             <tr>
-                                <td>{{ $rent->enrollment }}</td>
-                                <td>{{ $rent->customerObject->name }}</td>
-                                <td>R$ {{ $rent->value }}</td>
-                                <td>{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
-                                <td><input type="checkbox" name="satus" disabled
-                                        {{ $rent->status == 'paid' ? 'checked' : ''}}>
-                                </td>
+                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">{{ $rent->enrollment }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">{{ $rent->customerObject->name }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">Nº {{ $rent->contract }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">R$ {{ $rent->value }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -68,7 +68,7 @@
 
         <section class="dash_content_app" style="margin-top: 40px;">
             <header class="dash_content_app_header">
-                <h2 class="icon-tachometer">Repasses com Parcelas em aberto</h2>
+                <h2 class="icon-tachometer">Repasses em aberto</h2>
             </header>
 
             <div class="dash_content_app_box">
@@ -78,21 +78,19 @@
                         <tr>
                             <th>Parcela</th>
                             <th>Locador</th>
+                            <th>Contrato</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
-                            <th>Pago</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($transfers as $transfer)
                             <tr>
-                                <td>{{ $transfer->enrollment }}</td>
-                                <td>{{ $transfer->ownerObject->name }}</td>
-                                <td>R$ {{ $transfer->value }}</td>
-                                <td>{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
-                                <td><input type="checkbox" name="satus" disabled
-                                        {{ $transfer->status == 'paid' ? 'checked' : ''}}>
-                                </td>
+                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">{{ $transfer->enrollment }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">{{ $transfer->ownerObject->name }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">Nº {{ $transfer->contract }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">R$ {{ $transfer->value }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
                             </tr>
                         @endforeach
                         </tbody>
