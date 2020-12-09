@@ -21,7 +21,7 @@ class CreateContractsTable extends Migration
             $table->decimal('rent_price', 10, 2);
             $table->decimal('adm_fee', 10, 2);
             $table->decimal('tribute', 10, 2);
-            $table->decimal('condominium', 10, 2);
+            $table->decimal('condominium', 10, 2)->nullable();
             $table->date('start_at');
             $table->date('end_at');
             $table->timestamps();

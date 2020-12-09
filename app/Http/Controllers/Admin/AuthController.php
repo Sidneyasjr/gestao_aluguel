@@ -6,6 +6,8 @@ use App\Contract;
 use App\Customer;
 use App\Owner;
 use App\Property;
+use App\Rent;
+use App\Transfer;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,6 +30,9 @@ class AuthController extends Controller
         $owners = Owner::all()->count();
         $customers = Customer::all()->count();
 
+        $rents = Rent::where('status', 'unpaid')->orderBy('due_at', 'ASC')->limit(10)->get();
+        $transfers = Transfer::where('status', 'unpaid')->orderBy('enrollment', 'ASC')->limit(10)->get();
+
         $propertiesAvailable = Property::available()->count();
         $propertiesUnavailable = Property::unavailable()->count();
         $propertiesTotal = Property::all()->count();
@@ -45,6 +50,8 @@ class AuthController extends Controller
             'propertiesTotal' => $propertiesTotal,
             'contractsTotal' => $contractsTotal,
             'contracts' => $contracts,
+            'rents' => $rents,
+            'transfers' => $transfers
 
         ]);
     }

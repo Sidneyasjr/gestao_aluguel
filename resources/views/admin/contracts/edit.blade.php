@@ -167,7 +167,7 @@
                             <thead>
                             <tr>
                                 <th>Parcela</th>
-                                <th>Locatário</th>
+                                <th>Locador</th>
                                 <th>Valor</th>
                                 <th>Vencimento</th>
                                 <th>Pago</th>
@@ -193,7 +193,7 @@
                             <thead>
                             <tr>
                                 <th>Parcela</th>
-                                <th>Locador</th>
+                                <th>Locatário</th>
                                 <th>Valor</th>
                                 <th>Data do Repasse</th>
                                 <th>Pago</th>

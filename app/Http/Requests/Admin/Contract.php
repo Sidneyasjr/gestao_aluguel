@@ -31,7 +31,6 @@ class Contract extends FormRequest
             'rent_price' => 'required',
             'adm_fee' => 'required',
             'tribute' => 'required',
-            'condominium' => 'required',
             'start_at' => 'required',
             'end_at' => 'required'
         ];
