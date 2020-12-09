@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Contract;
 use App\Customer;
-use App\MonthlyPayment;
+use App\Rent;
 use App\Owner;
 use App\Property;
 use App\Transfer;
@@ -78,7 +78,7 @@ class ContractController extends Controller
                 $value = ($value / 30) * (31 - $d);
                 $value = round($value, 2);
             }
-            $monthlyPayCreate = MonthlyPayment::create([
+            $rentCreate = Rent::create([
                 'enrollment' => $enrollment + 1,
                 'contract' => $contractCreate->id,
                 'customer' => $contractCreate->customer,
@@ -137,14 +137,14 @@ class ContractController extends Controller
         $customers = Customer::all();
         $contract = Contract::where('id', $id)->first();
         $transfers = Transfer::where('contract', $id)->get();
-        $monthPays = MonthlyPayment::where('contract', $id)->get();
+        $rents = Rent::where('contract', $id)->get();
 
         return view('admin.contracts.edit', [
             'owners' => $owners,
             'customers' => $customers,
             'contract' => $contract,
             'transfers' => $transfers,
-            'monthPays' => $monthPays
+            'rents' => $rents
         ]);
     }
 

@@ -41,6 +41,12 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::post('contracts/get-data-property',
             'ContractController@getDataProperty')->name('contracts.getDataProperty');
         Route::resource('contracts', 'ContractController');
+
+        /** Repasses */
+        Route::resource('transfers', 'TransferController');
+
+        /** Aluguel */
+        Route::resource('rents', 'RentController');
     });
 
 

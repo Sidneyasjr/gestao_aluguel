@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Contract;
 use App\Http\Controllers\Controller;
-use App\Transfer;
+use App\Rent;
 use Illuminate\Http\Request;
 
-class TransferController extends Controller
+class RentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +16,10 @@ class TransferController extends Controller
      */
     public function index()
     {
-        $transfers = Transfer::all();
+        $rents = Rent::all();
         $contracts = Contract::all();
-        return view('admin.management.transfer', [
-            'transfers' => $transfers,
+        return view('admin.management.rent', [
+            'rents' => $rents,
             'contracts' => $contracts
         ]);
     }
@@ -76,15 +76,14 @@ class TransferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $transfer = Transfer::where('id', $id)->first();
-        $transfer->fill($request->all());
+        $rent = Rent::where('id', $id)->first();
+        $rent->fill($request->all());
 
-        $transfer->status = ($transfer->status == "paid" ? "unpaid" : "paid");
-        $transfer->save();
+        $rent->status = ($rent->status == "paid" ? "unpaid" : "paid");
+        $rent->save();
 
-        return redirect()->route('admin.transfers.index')
-            ->with(['color' => 'green', 'message' => 'Parcela atualizada com sucesso!']);
-
+        return redirect()->route('admin.rents.index')
+            ->with(['color' => 'green', 'message' => 'Parcela Atualizada com sucesso!']);
     }
 
     /**

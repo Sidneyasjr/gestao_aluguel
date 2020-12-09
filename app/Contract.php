@@ -42,9 +42,9 @@ class Contract extends Model
     {
         return $this->hasMany(Transfer::class, 'contracts', 'id');
     }
-    public function monthPay()
+    public function rent()
     {
-        return $this->hasMany(MonthlyPayment::class, 'contracts', 'id');
+        return $this->hasMany(Rent::class, 'contracts', 'id');
     }
 
 
@@ -123,33 +123,6 @@ class Contract extends Model
         $this->attributes['condominium'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
-//    public function getStartAtAttribute($value)
-//    {
-//        if (empty($value)) {
-//            return null;
-//        }
-//
-//        return date('d/m/Y', strtotime($value));
-//    }
-//
-//    public function setStartAtAttribute($value)
-//    {
-//        $this->attributes['start_at'] = (!empty($value) ? $this->convertStringToDate($value) : null);
-//    }
-//
-//    public function getEndAtAttribute($value)
-//    {
-//        if (empty($value)) {
-//            return null;
-//        }
-//
-//        return date('d/m/Y', strtotime($value));
-//    }
-//
-//    public function setEndAtAttribute($value)
-//    {
-//        $this->attributes['end_at'] = (!empty($value) ? $this->convertStringToDate($value) : null);
-//    }
 
     private function convertStringToDouble($param)
     {

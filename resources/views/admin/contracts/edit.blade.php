@@ -41,9 +41,10 @@
                         <a href="#parts" class="nav_tabs_item_link active">Dados do Contrato</a>
                     </li>
                     <li class="nav_tabs_item">
-                        <a href="#transfer" class="nav_tabs_item_link">Repasses</a>
-                    </li><li class="nav_tabs_item">
                         <a href="#month_pay" class="nav_tabs_item_link">Mensalidades</a>
+                    </li>
+                    <li class="nav_tabs_item">
+                        <a href="#transfer" class="nav_tabs_item_link">Repasses</a>
                     </li>
                 </ul>
 
@@ -161,6 +162,32 @@
                             </div>
                         </form>
                     </div>
+                    <div id="month_pay" class="d-none">
+                        <table id="dataTable2" class="nowrap stripe" width="100" style="width: 100% !important;">
+                            <thead>
+                            <tr>
+                                <th>Parcela</th>
+                                <th>Locatário</th>
+                                <th>Valor</th>
+                                <th>Vencimento</th>
+                                <th>Pago</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($rents as $rent)
+                                <tr>
+                                    <td>{{ $rent->enrollment }}</td>
+                                    <td>{{ $rent->customerObject->name }}</td>
+                                    <td>R$ {{ $rent->value }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
+                                    <td><input type="checkbox" name="satus" disabled
+                                            {{ $rent->status == 'paid' ? 'checked' : ''}}>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                     <div id="transfer" class="d-none">
                         <table id="dataTable" class="nowrap stripe" width="100" style="width: 100% !important;">
                             <thead>
@@ -181,32 +208,6 @@
                                     <td>{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
                                     <td><input type="checkbox" name="satus" disabled
                                             {{ $transfer->status == 'paid' ? 'checked' : ''}}>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div id="month_pay" class="d-none">
-                        <table id="dataTable2" class="nowrap stripe" width="100" style="width: 100% !important;">
-                            <thead>
-                            <tr>
-                                <th>Parcela</th>
-                                <th>Locatário</th>
-                                <th>Valor</th>
-                                <th>Vencimento</th>
-                                <th>Pago</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($monthPays as $monthPay)
-                                <tr>
-                                    <td>{{ $monthPay->enrollment }}</td>
-                                    <td>{{ $monthPay->customerObject->name }}</td>
-                                    <td>R$ {{ $monthPay->value }}</td>
-                                    <td>{{ date('d/m/Y', strtotime($monthPay->due_at)) }}</td>
-                                    <td><input type="checkbox" name="satus" disabled
-                                            {{ $monthPay->status == 'paid' ? 'checked' : ''}}>
                                     </td>
                                 </tr>
                             @endforeach

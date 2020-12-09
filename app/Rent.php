@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transfer extends Model
+class Rent extends Model
 {
     protected $fillable = [
         'enrollment',
         'contract',
-        'owner',
+        'customer',
         'value',
         'due_at',
         'status'
@@ -18,13 +18,15 @@ class Transfer extends Model
 
     public function contractObject()
     {
-        return $this->hasOne(Contract::class, 'id', 'contract');
+        return $this->hasOne(Owner::class, 'id', 'contract');
     }
 
-    public function ownerObject()
+    public function customerObject()
     {
-        return $this->hasOne(Owner::class, 'id', 'owner');
+        return $this->hasOne(Customer::class, 'id', 'customer');
     }
+
+
 
     public function getValueAttribute($value)
     {
@@ -54,5 +56,4 @@ class Transfer extends Model
         list($day, $month, $year) = explode('/', $param);
         return (new \DateTime($year . '-' . $month . '-' . $day))->format('Y-m-d');
     }
-
 }

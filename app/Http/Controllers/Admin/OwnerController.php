@@ -42,7 +42,7 @@ class OwnerController extends Controller
     {
         $ownerCreate = Owner::create($request->all());
         return redirect()->route('admin.owners.edit', [
-            'users' => $ownerCreate->id
+            'owner' => $ownerCreate->id
         ])->with(['color' => 'green', 'message' => 'Cliente cadastrado com sucesso!']);
     }
 

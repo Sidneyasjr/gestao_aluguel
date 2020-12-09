@@ -12,9 +12,9 @@ class Customer extends Model
         'telephone'
     ];
 
-    public function monthPay()
+    public function rent()
     {
-        return $this->hasMany(MonthlyPayment::class, 'customer', 'id');
+        return $this->hasMany(Rent::class, 'customer', 'id');
     }
 
     public function getTelephoneAttribute($value)

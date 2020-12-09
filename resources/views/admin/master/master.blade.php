@@ -54,8 +54,17 @@
             <li class="dash_sidebar_nav_item {{ isActive('admin.home') }}">
                 <a class="icon-tachometer" href="{{ route('admin.home') }}">Dashboard</a>
             </li>
-            <li class="dash_sidebar_nav_item {{ isActive('admin.customers') }}"><a class="icon-users"
-                                                                                   href="{{ route('admin.customers.index') }}">Clientes</a>
+            <li class="dash_sidebar_nav_item {{ isActive('admin.rents')}} {{ isActive('admin.transfers')}}">
+                <a class="icon-calendar-check-o">Gestão</a>
+                <ul class="dash_sidebar_nav_submenu">
+                    <li class="{{ isActive('admin.rents.index') }}"><a href="{{ route('admin.rents.index') }}">Mensalidades</a>
+                    </li>
+                    <li class="{{ isActive('admin.transfers.index') }}"><a href="{{ route('admin.transfers.index') }}">Repasses</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dash_sidebar_nav_item {{ isActive('admin.customers') }}">
+                <a class="icon-users">Clientes</a>
                 <ul class="dash_sidebar_nav_submenu">
                     <li class="{{ isActive('admin.customers.index') }}"><a href="{{ route('admin.customers.index') }}">Ver
                             Todos</a></li>
@@ -63,8 +72,8 @@
                             href="{{ route('admin.customers.create') }}">Criar Novo</a></li>
                 </ul>
             </li>
-            <li class="dash_sidebar_nav_item {{ isActive('admin.owners') }}"><a class="icon-users"
-                                                                                href="{{ route('admin.owners.index') }}">Proprietários</a>
+            <li class="dash_sidebar_nav_item {{ isActive('admin.owners') }}">
+                <a class="icon-user-plus">Proprietários</a>
                 <ul class="dash_sidebar_nav_submenu">
                     <li class="{{ isActive('admin.owners.index') }}"><a href="{{ route('admin.owners.index') }}">Ver
                             Todos</a></li>
@@ -72,8 +81,7 @@
                             Novo</a></li>
                 </ul>
             </li>
-            <li class="dash_sidebar_nav_item {{ isActive('admin.properties') }}"><a class="icon-home"
-                                                                                    href="{{ route('admin.properties.index') }}">Imóveis</a>
+            <li class="dash_sidebar_nav_item {{ isActive('admin.properties') }}"><a class="icon-home">Imóveis</a>
                 <ul class="dash_sidebar_nav_submenu">
                     <li class="{{ isActive('admin.properties.index') }}"><a
                             href="{{ route('admin.properties.index') }}">Ver Todos</a></li>
@@ -81,8 +89,7 @@
                             href="{{ route('admin.properties.create') }}">Criar Novo</a></li>
                 </ul>
             </li>
-            <li class="dash_sidebar_nav_item {{ isActive('admin.contracts') }}"><a class="icon-file-text"
-                                                                                   href="{{ route('admin.contracts.index') }}">Contratos</a>
+            <li class="dash_sidebar_nav_item {{ isActive('admin.contracts') }}"><a class="icon-file-text">Contratos</a>
                 <ul class="dash_sidebar_nav_submenu">
                     <li class="{{ isActive('admin.contracts.index') }}"><a href="{{ route('admin.contracts.index') }}">Ver
                             Todos</a></li>
@@ -90,8 +97,8 @@
                             href="{{ route('admin.contracts.create') }}">Criar Novo</a></li>
                 </ul>
             </li>
-            <li class="dash_sidebar_nav_item {{ isActive('admin.users') }}"><a class="icon-users"
-                                                                               href="{{ route('admin.users.index') }}">Usuários</a>
+            <li class="dash_sidebar_nav_item {{ isActive('admin.users') }}">
+                <a class="icon-user-times">Usuários</a>
                 <ul class="dash_sidebar_nav_submenu">
                     <li class="{{ isActive('admin.users.index') }}"><a href="{{ route('admin.users.index') }}">Ver
                             Todos</a></li>
