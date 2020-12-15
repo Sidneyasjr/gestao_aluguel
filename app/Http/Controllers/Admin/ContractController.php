@@ -8,16 +8,26 @@ use App\Rent;
 use App\Owner;
 use App\Property;
 use App\Transfer;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Foundation\Application;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Contract as ContractRequest;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
+/**
+ * Class ContractController
+ * @package App\Http\Controllers\Admin
+ */
 class ContractController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Factory|Application|Response|View
      */
     public function index()
     {
@@ -31,7 +41,7 @@ class ContractController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Factory|Application|Response|View
      */
     public function create()
     {
@@ -50,8 +60,7 @@ class ContractController extends Controller
      * Store a newly created resource in storage.
      *
      * @param ContractRequest $request
-     * @param $contactCreate
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(ContractRequest $request)
     {
@@ -118,7 +127,7 @@ class ContractController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Factory|Application|Response|View
      */
     public function show($id)
     {
@@ -129,7 +138,7 @@ class ContractController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Factory|Application|Response|View
      */
     public function edit($id)
     {
@@ -151,9 +160,9 @@ class ContractController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param ContractRequest $request
+     * @param int $id
+     * @return RedirectResponse
      */
     public function update(ContractRequest $request, $id)
     {
@@ -182,14 +191,18 @@ class ContractController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {
         //
     }
 
-    public function getDataOwner(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getDataOwner(Request $request): JsonResponse
     {
         $owner = Owner::where('id', $request->owner)->first([
             'id',
@@ -218,7 +231,11 @@ class ContractController extends Controller
         return response()->json($json);
     }
 
-    public function getDataProperty(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getDataProperty(Request $request): JsonResponse
     {
         $property = Property::where('id', $request->property)->first();
 

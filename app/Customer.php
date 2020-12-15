@@ -3,21 +3,37 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+
+/**
+ * Class Customer
+ * @package App
+ */
 class Customer extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
         'email',
         'telephone'
     ];
 
-    public function rent()
+    /**
+     * @return HasMany
+     */
+    public function rent(): HasMany
     {
         return $this->hasMany(Rent::class, 'customer', 'id');
     }
 
-    public function getTelephoneAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getTelephoneAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -40,11 +56,18 @@ class Customer extends Model
             ;
     }
 
+    /**
+     * @param $value
+     */
     public function setTelephoneAttribute($value)
     {
         $this->attributes['telephone'] = (!empty($value) ? $this->clearField($value) : null);
     }
 
+    /**
+     * @param string|null $param
+     * @return string|string[]|null
+     */
     private function clearField(?string $param)
     {
         if (empty($param)) {

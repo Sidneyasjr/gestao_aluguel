@@ -34,7 +34,7 @@
 
         <section class="dash_content_app" style="margin-top: 40px;">
             <header class="dash_content_app_header">
-                <h2 class="icon-tachometer">Mensalidade em aberto</h2>
+                <h2 class="icon-tachometer">Mensalidades em aberto</h2>
             </header>
 
             <div class="dash_content_app_box">
@@ -47,16 +47,40 @@
                             <th>Contrato</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($rents as $rent)
                             <tr>
-                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">{{ $rent->enrollment }}</td>
-                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">{{ $rent->customerObject->name }}</td>
-                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">Nº {{ $rent->contract }}</td>
-                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">R$ {{ $rent->value }}</td>
-                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}"
+                                       class="text-orange">{{ $rent->enrollment }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}"
+                                       class="text-orange">{{ $rent->customerObject->name }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}"
+                                       class="text-orange">Nº {{ $rent->contract }}</td>
+                                <td><a href="{{ route('admin.rents.index') }}" class="text-orange">R$ {{ $rent->value }}
+                                </td>
+                                <td><a href="{{ route('admin.rents.index') }}"
+                                       class="text-orange">{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
+                                <td>
+                                    <div id="content">
+                                        <label class="label">
+                                            <form action="{{ route('admin.rents.update', ['rent'=> $rent->id]) }}"
+                                                  method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                @if($rent->status == 'unpaid')
+                                                    <input class="status status-orange" type="submit" value=""
+                                                           data-toggleclass="status-green status-orange">
+                                                @else
+                                                    <input class="status status-green" type="submit" value=""
+                                                           data-toggleclass="status-green status-orange">
+                                                @endif
+                                            </form>
+                                        </label>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -81,16 +105,40 @@
                             <th>Contrato</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
+                            <th>Status</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($transfers as $transfer)
                             <tr>
-                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">{{ $transfer->enrollment }}</td>
-                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">{{ $transfer->ownerObject->name }}</td>
-                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">Nº {{ $transfer->contract }}</td>
-                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">R$ {{ $transfer->value }}</td>
-                                <td><a href="{{ route('admin.transfers.index') }}" class="text-orange">{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}"
+                                       class="text-orange">{{ $transfer->enrollment }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}"
+                                       class="text-orange">{{ $transfer->ownerObject->name }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}"
+                                       class="text-orange">Nº {{ $transfer->contract }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}"
+                                       class="text-orange">R$ {{ $transfer->value }}</td>
+                                <td><a href="{{ route('admin.transfers.index') }}"
+                                       class="text-orange">{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
+                                <td>
+                                    <div id="content">
+                                        <label class="label">
+                                            <form action="{{ route('admin.transfers.update', ['transfer'=> $transfer->id]) }}"
+                                                  method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                @if($transfer->status == 'unpaid')
+                                                    <input class="status status-orange" type="submit" value=""
+                                                           data-toggleclass="status-green status-orange">
+                                                @else
+                                                    <input class="status status-green" type="submit" value=""
+                                                           data-toggleclass="status-green status-orange">
+                                                @endif
+                                            </form>
+                                        </label>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -137,7 +185,44 @@
         </section>
 
 
-
     </div>
 @endsection
+@section('js')
+    <script>
 
+        $(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $("form:not('.ajax_off')").submit(function (e) {
+                e.preventDefault();
+                var form = $(this);
+                var flash = "Atualizado com Sucesso";
+
+
+                form.ajaxSubmit({
+                    url: form.attr("action"),
+                    type: "POST",
+                    success: function () {
+
+                    },
+
+                });
+            });
+
+            $("[data-toggleclass]").click(function () {
+                var clicked = $(this);
+                var toggle = clicked.data("toggleclass");
+                clicked.toggleClass(toggle);
+            });
+
+
+
+
+        });
+    </script>
+@endsection

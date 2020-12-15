@@ -3,9 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Class Owner
+ * @package App
+ */
 class Owner extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name',
         'email',
@@ -17,18 +25,29 @@ class Owner extends Model
      * Relacionamentos
      */
 
-    public function properties()
+
+    /**
+     * @return HasMany
+     */
+    public function properties(): HasMany
     {
         return $this->hasMany(Property::class, 'owner', 'id');
     }
 
-    public function transfer()
+    /**
+     * @return HasMany
+     */
+    public function transfer(): HasMany
     {
         return $this->hasMany(Transfer::class, 'owner', 'id');
     }
 
 
-    public function getTelephoneAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getTelephoneAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -51,11 +70,18 @@ class Owner extends Model
             ;
     }
 
+    /**
+     * @param $value
+     */
     public function setTelephoneAttribute($value)
     {
         $this->attributes['telephone'] = (!empty($value) ? $this->clearField($value) : null);
     }
 
+    /**
+     * @param string|null $param
+     * @return string|string[]|null
+     */
     private function clearField(?string $param)
     {
         if (empty($param)) {

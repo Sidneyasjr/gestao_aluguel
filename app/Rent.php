@@ -3,9 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Class Rent
+ * @package App
+ */
 class Rent extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'enrollment',
         'contract',
@@ -16,19 +24,28 @@ class Rent extends Model
     ];
 
 
-    public function contractObject()
+    /**
+     * @return HasOne
+     */
+    public function contractObject(): HasOne
     {
         return $this->hasOne(Owner::class, 'id', 'contract');
     }
 
-    public function customerObject()
+    /**
+     * @return HasOne
+     */
+    public function customerObject(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer');
     }
 
 
-
-    public function getValueAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getValueAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -38,6 +55,10 @@ class Rent extends Model
     }
 
 
+    /**
+     * @param $param
+     * @return string|string[]|null
+     */
     private function convertStringToDouble($param)
     {
         if(empty($param)){
@@ -47,7 +68,12 @@ class Rent extends Model
         return str_replace(',', '.', str_replace('.', '', $param));
     }
 
-    private function convertStringToDate($param)
+    /**
+     * @param $param
+     * @return string|null
+     * @throws \Exception
+     */
+    private function convertStringToDate($param): ?string
     {
         if(empty($param)) {
             return null;

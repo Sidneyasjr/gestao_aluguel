@@ -9,12 +9,24 @@ use App\Property;
 use App\Rent;
 use App\Transfer;
 use App\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
+/**
+ * Class AuthController
+ * @package App\Http\Controllers\Admin
+ */
 class AuthController extends Controller
 {
+    /**
+     * @return Application|Factory|RedirectResponse|View
+     */
     public function showLoginForm()
     {
 
@@ -25,6 +37,9 @@ class AuthController extends Controller
         return view('admin.index');
     }
 
+    /**
+     * @return Application|Factory|View
+     */
     public function home()
     {
         $owners = Owner::all()->count();
@@ -65,6 +80,10 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function login(Request $request)
     {
         if (in_array ('', $request->only('email', 'password'))) {
@@ -92,12 +111,18 @@ class AuthController extends Controller
         return response()->json($json);
     }
 
-    public function logout()
+    /**
+     * @return RedirectResponse
+     */
+    public function logout(): RedirectResponse
     {
         Auth::logout();
         return redirect()->route('admin.login');
     }
 
+    /**
+     * @param string $ip
+     */
     private function authenticated(string $ip)
     {
         $user = User::where('id', Auth::user()->id);

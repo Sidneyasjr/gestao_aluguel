@@ -56,17 +56,22 @@
                             <td>R$ {{ $transfer->value }}</td>
                             <td>{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
                             <td>
-                                <label class="label">
-                                    <form action="{{ route('admin.transfers.update', ['transfer' => $transfer ]) }}" method="post">
-                                        @csrf
-                                        @method('PUT')
-                                        @if($transfer->status == 'unpaid')
-                                            <input class="btn btn-orange" type="submit" value="Não Pago">
-                                        @else
-                                            <input class="btn btn-green" type="submit" value="Pago">
-                                        @endif
-                                    </form>
-                                </label>
+                                <div id="content">
+                                    <label class="label">
+                                        <form action="{{ route('admin.transfers.update', ['transfer'=> $transfer->id]) }}"
+                                              method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            @if($transfer->status == 'unpaid')
+                                                <input class="status status-orange" type="submit" value=""
+                                                       data-toggleclass="status-green status-orange">
+                                            @else
+                                                <input class="status status-green" type="submit" value=""
+                                                       data-toggleclass="status-green status-orange">
+                                            @endif
+                                        </form>
+                                    </label>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
@@ -75,4 +80,39 @@
             </div>
         </div>
     </section>
+@endsection
+@section('js')
+    <script>
+
+        $(function () {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $("form:not('.ajax_off')").submit(function (e) {
+                e.preventDefault();
+                var form = $(this);
+
+
+                form.ajaxSubmit({
+                    url: form.attr("action"),
+                    type: "POST",
+                    success: function () {
+
+                    },
+
+                });
+            });
+
+            $("[data-toggleclass]").click(function () {
+                var clicked = $(this);
+                var toggle = clicked.data("toggleclass");
+                clicked.toggleClass(toggle);
+            });
+
+        });
+    </script>
 @endsection

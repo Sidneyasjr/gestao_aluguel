@@ -5,14 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Contract;
 use App\Http\Controllers\Controller;
 use App\Rent;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class RentController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Application|Factory|Response|View
      */
     public function index()
     {
@@ -27,7 +33,7 @@ class RentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -37,8 +43,8 @@ class RentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -48,8 +54,8 @@ class RentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -59,8 +65,8 @@ class RentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
@@ -70,11 +76,10 @@ class RentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request
+     * @param int $id
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id): JsonResponse
     {
         $rent = Rent::where('id', $id)->first();
         $rent->fill($request->all());
@@ -82,15 +87,16 @@ class RentController extends Controller
         $rent->status = ($rent->status == "paid" ? "unpaid" : "paid");
         $rent->save();
 
-        return redirect()->route('admin.rents.index')
-            ->with(['color' => 'green', 'message' => 'Parcela Atualizada com sucesso!']);
+        $json['status'] = $rent->status;
+
+        return response()->json($json);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {

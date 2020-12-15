@@ -3,9 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * Class Contract
+ * @package App
+ */
 class Contract extends Model
 {
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'property',
         'owner',
@@ -23,26 +32,40 @@ class Contract extends Model
      * Relacionamentos
      */
 
-    public function ownerObject()
+
+    public function ownerObject(): HasOne
     {
         return $this->hasOne(Owner::class, 'id', 'owner');
     }
 
-    public function propertyObject()
+    /**
+     * @return HasOne
+     */
+    public function propertyObject(): HasOne
     {
         return $this->hasOne(Property::class, 'id', 'property');
     }
 
-    public function customerObject()
+    /**
+     * @return HasOne
+     */
+    public function customerObject(): HasOne
     {
         return $this->hasOne(Customer::class, 'id', 'customer');
     }
 
-    public function transfer()
+    /**
+     * @return HasMany
+     */
+    public function transfer(): HasMany
     {
         return $this->hasMany(Transfer::class, 'contracts', 'id');
     }
-    public function rent()
+
+    /**
+     * @return HasMany
+     */
+    public function rent(): HasMany
     {
         return $this->hasMany(Rent::class, 'contracts', 'id');
     }
@@ -50,6 +73,8 @@ class Contract extends Model
 
     /**
      * Scopes
+     * @param $query
+     * @return mixed
      */
 
     public function scopePendent($query)
@@ -57,17 +82,29 @@ class Contract extends Model
         return $query->where('status', 'pendent');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeCanceled($query)
     {
         return $query->where('status', 'canceled');
     }
 
-    public function getRentPriceAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getRentPriceAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -76,12 +113,19 @@ class Contract extends Model
         return number_format($value, 2, ',', '.');
     }
 
+    /**
+     * @param $value
+     */
     public function setRentPriceAttribute($value)
     {
         $this->attributes['rent_price'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
-    public function getTributeAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getTributeAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -90,12 +134,19 @@ class Contract extends Model
         return number_format($value, 2, ',', '.');
     }
 
+    /**
+     * @param $value
+     */
     public function setTributeAttribute($value)
     {
         $this->attributes['tribute'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
-    public function getAdmFeeAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getAdmFeeAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -104,12 +155,19 @@ class Contract extends Model
         return number_format($value, 2, ',', '.');
     }
 
+    /**
+     * @param $value
+     */
     public function setAdmFeeAttribute($value)
     {
         $this->attributes['adm_fee'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
-    public function getCondominiumAttribute($value)
+    /**
+     * @param $value
+     * @return string|null
+     */
+    public function getCondominiumAttribute($value): ?string
     {
         if (empty($value)) {
             return null;
@@ -118,12 +176,19 @@ class Contract extends Model
         return number_format($value, 2, ',', '.');
     }
 
+    /**
+     * @param $value
+     */
     public function setCondominiumAttribute($value)
     {
         $this->attributes['condominium'] = (!empty($value) ? floatval($this->convertStringToDouble($value)) : null);
     }
 
 
+    /**
+     * @param $param
+     * @return string|string[]|null
+     */
     private function convertStringToDouble($param)
     {
         if(empty($param)){
@@ -133,7 +198,12 @@ class Contract extends Model
         return str_replace(',', '.', str_replace('.', '', $param));
     }
 
-    private function convertStringToDate($param)
+    /**
+     * @param $param
+     * @return string|null
+     * @throws \Exception
+     */
+    private function convertStringToDate($param): ?string
     {
         if(empty($param)) {
             return null;
