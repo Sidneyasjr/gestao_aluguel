@@ -7,11 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Transfer;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
+/**
+ * Class TransferController
+ * @package App\Http\Controllers\Admin
+ */
 class TransferController extends Controller
 {
     /**
@@ -77,9 +82,9 @@ class TransferController extends Controller
      *
      * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
+    public function update(Request $request, $id): JsonResponse
     {
         $transfer = Transfer::where('id', $id)->first();
         $transfer->fill($request->all());
@@ -102,5 +107,23 @@ class TransferController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function onpaid(Request $request, $id)
+    {
+        $transfer = Transfer::where('id', $id)->first();
+        $transfer->fill($request->all());
+
+        $transfer->status = ($transfer->status == "paid" ? "unpaid" : "paid");
+        $transfer->save();
+
+        $json['status'] = $transfer->status;
+
+        return response()->json($json);
     }
 }

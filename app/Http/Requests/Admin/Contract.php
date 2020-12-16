@@ -29,9 +29,6 @@ class Contract extends FormRequest
             'property' => 'required',
             'owner' => 'required',
             'customer' => 'required',
-            'rent_price' => 'required',
-            'adm_fee' => 'required',
-            'tribute' => 'required',
             'start_at' => 'required'
         ];
     }

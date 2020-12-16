@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
 
+/**
+ * Class RentController
+ * @package App\Http\Controllers\Admin
+ */
 class RentController extends Controller
 {
     /**
@@ -101,5 +105,23 @@ class RentController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function onpaid(Request $request, $id)
+    {
+        $rent = Rent::where('id', $id)->first();
+        $rent->fill($request->all());
+
+        $rent->status = ($rent->status == "paid" ? "unpaid" : "paid");
+        $rent->save();
+
+        $json['status'] = $rent->status;
+
+        return response()->json($json);
     }
 }

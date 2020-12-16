@@ -43,9 +43,11 @@ Route::group(['namespace' => 'Admin', 'as' => 'admin.'], function () {
         Route::resource('contracts', 'ContractController');
 
         /** Repasses */
+        Route::post('transfers/{transfer}/onpaid', 'TransferController@onpaid')->name('transfers.onpaid');
         Route::resource('transfers', 'TransferController');
 
         /** Aluguel */
+        Route::post('rents/{rent}/onpaid', 'RentController@onpaid')->name('rents.onpaid');
         Route::resource('rents', 'RentController');
     });
 

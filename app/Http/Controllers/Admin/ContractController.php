@@ -67,7 +67,6 @@ class ContractController extends Controller
 
         $contractCreate = Contract::create($request->all());
 
-
         $tribute = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->tribute)));
         $rent_price = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->rent_price)));
         $adm_fee = floatval(str_replace(',', '.', str_replace('.', '', $contractCreate->adm_fee)));

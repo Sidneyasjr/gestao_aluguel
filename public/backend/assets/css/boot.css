@@ -3384,103 +3384,16 @@ a.text-orange:hover {
 }
 
 .status {
-  border-radius: 20px;
-  display: inline-block;
-  padding: 3px 12px;
-  background: #555555;
-  border: none;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.status .check {
+  margin-left: var(--area-small);
+  font-size: 1.3em;
   cursor: pointer;
-  color: #ffffff;
-  font-size: 0.875em;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
-  transition-duration: 0.3s;
-  margin: 2px;
-  outline: none;
-}
-.status:hover {
-  background-color: #414141;
-}
-
-.status-small {
-  padding: 2px 4px;
-}
-
-.status-large {
-  padding: 10px 20px;
-}
-
-.status-large-ext {
-  padding: 20px 40px;
-}
-
-.status-block {
-  display: block;
-  width: 100%;
-}
-
-.status-disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.status-green {
-  background-color: #36BA9B;
-  color: #ffffff;
-}
-.status-green:hover {
-  background-color: #2d9a81;
-}
-.status-green:disabled {
-  background-color: #7dd9c4;
-  cursor: not-allowed;
-}
-
-.status-blue {
-  background-color: #39AED9;
-  color: #ffffff;
-}
-.status-blue:hover {
-  background-color: #2699c4;
-}
-.status-blue:disabled {
-  background-color: #8fd1e9;
-  cursor: not-allowed;
-}
-
-.status-yellow {
-  background-color: #F5B946;
-  color: #ffffff;
-}
-.status-yellow:hover {
-  background-color: #f3aa1f;
-}
-.status-yellow:disabled {
-  background-color: #fadea7;
-  cursor: not-allowed;
-}
-
-.status-red {
-  background-color: #D94352;
-  color: #ffffff;
-}
-.status-red:hover {
-  background-color: #ca2939;
-}
-.status-red:disabled {
-  background-color: #ea98a0;
-  cursor: not-allowed;
-}
-
-.status-orange {
-  background-color: #F4645F;
-  color: #ffffff;
-}
-.status-orange:hover {
-  background-color: #f13f39;
-}
-.status-orange:disabled {
-  background-color: #fbc0be;
-  cursor: not-allowed;
 }
 
 .bg-green {

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMonthlyPaymentsTable extends Migration
+class CreateRentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -23,6 +23,7 @@ class CreateMonthlyPaymentsTable extends Migration
             $table->string('status')->nullable();
             $table->timestamps();
 
+            $table->foreign('contract')->references('id')->on('contracts')->onDelete('CASCADE');
             $table->foreign('customer')->references('id')->on('customers')->onDelete('CASCADE');
         });
     }

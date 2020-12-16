@@ -104,7 +104,7 @@
                                 </label>
                                 <label class="label">
                                     <span class="legend">Taxa de Administração:</span>
-                                    <input type="text" name="adm_fee"  class="mask-percent"
+                                    <input type="text" name="adm_fee" class="mask-percent"
                                            placeholder="Taxa de Administração"
                                            value="{{ old('adm_fee') ?? $contract->adm_fee }}"/>
                                 </label>
@@ -185,20 +185,17 @@
                                     <td><a href="{{ route('admin.rents.index') }}"
                                            class="text-orange">{{ date('d/m/Y', strtotime($rent->due_at)) }}</td>
                                     <td>
-                                        <div id="content">
+                                        <div class="status">
                                             <label class="label">
-                                                <form action="{{ route('admin.rents.update', ['rent'=> $rent->id]) }}"
-                                                      method="post">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    @if($rent->status == 'unpaid')
-                                                        <input class="status status-orange" type="submit" value=""
-                                                               data-toggleclass="status-green status-orange">
-                                                    @else
-                                                        <input class="status status-green" type="submit" value=""
-                                                               data-toggleclass="status-green status-orange">
-                                                    @endif
-                                                </form>
+                                                @if($rent->status == 'unpaid')
+                                                    <span class="check text-orange icon-thumbs-o-down transition"
+                                                          data-toggleclass="active icon-thumbs-o-up text-blue  icon-thumbs-o-down text-orange"
+                                                          data-onpaid="{{ route('admin.rents.onpaid', ['rent'=> $rent->id]) }}"></span>
+                                                @else
+                                                    <span class="check text-blue icon-thumbs-o-up transition"
+                                                          data-toggleclass="active icon-thumbs-o-up text-blue  icon-thumbs-o-down text-orange"
+                                                          data-onpaid="{{ route('admin.rents.onpaid', ['rent'=> $rent->id]) }}"></span>
+                                                @endif
                                             </label>
                                         </div>
                                     </td>
@@ -230,20 +227,17 @@
                                     <td><a href="{{ route('admin.transfers.index') }}"
                                            class="text-orange">{{ date('d/m/Y', strtotime($transfer->due_at)) }}</td>
                                     <td>
-                                        <div id="content">
+                                        <div class="status">
                                             <label class="label">
-                                                <form action="{{ route('admin.transfers.update', ['transfer'=> $transfer->id]) }}"
-                                                      method="post">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    @if($transfer->status == 'unpaid')
-                                                        <input class="status status-orange" type="submit" value=""
-                                                               data-toggleclass="status-green status-orange">
-                                                    @else
-                                                        <input class="status status-green" type="submit" value=""
-                                                               data-toggleclass="status-green status-orange">
-                                                    @endif
-                                                </form>
+                                                @if($transfer->status == 'unpaid')
+                                                    <span class="check text-orange icon-thumbs-o-down transition"
+                                                          data-toggleclass="active icon-thumbs-o-up text-blue  icon-thumbs-o-down text-orange"
+                                                          data-onpaid="{{ route('admin.transfers.onpaid', ['transfer'=> $transfer->id]) }}"></span>
+                                                @else
+                                                    <span class="check text-blue icon-thumbs-o-up transition"
+                                                          data-toggleclass="active icon-thumbs-o-up text-blue  icon-thumbs-o-down text-orange"
+                                                          data-onpaid="{{ route('admin.transfers.onpaid', ['transfer'=> $transfer->id]) }}"></span>
+                                                @endif
                                             </label>
                                         </div>
                                     </td>
@@ -318,25 +312,23 @@
                 }, 'json');
             });
 
-            $("form:not('.ajax_off')").submit(function (e) {
-                e.preventDefault();
-                var form = $(this);
-
-
-                form.ajaxSubmit({
-                    url: form.attr("action"),
-                    type: "POST",
-                    success: function () {
-
-                    },
-
-                });
-            });
 
             $("[data-toggleclass]").click(function () {
                 var clicked = $(this);
                 var toggle = clicked.data("toggleclass");
                 clicked.toggleClass(toggle);
+            });
+
+            $("[data-onpaid]").click(function (e) {
+                var clicked = $(this);
+                var dataset = clicked.data();
+
+                $.post(clicked.data("onpaid"), dataset, function (response) {
+                    //reload by error
+                    if (response.reload) {
+                        window.location.reload();
+                    }
+                }, "json");
             });
 
 
