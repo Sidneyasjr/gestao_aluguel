@@ -166,7 +166,6 @@
                         $('select[name="property"]').append($('<option>', {
                             value: value.id,
                             text: value.description,
-                            value: value.status,
                             selected: ($('input[name="property_persist"]').val() != 0 && $('input[name="property_persist"]').val() == value.id ? 'selected' : false)
                         }));
                     });
