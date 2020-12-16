@@ -64,6 +64,7 @@ class ContractController extends Controller
      */
     public function store(ContractRequest $request)
     {
+
         $contractCreate = Contract::create($request->all());
 
 
@@ -101,9 +102,9 @@ class ContractController extends Controller
 
         $dateTransfer = $y . '-' . $m . '-' . $contractCreate->ownerObject->day_transfer;
         $dateTransfer = date("Y-m-d", strtotime($dateTransfer . "+1month"));
-//        dd($dateTransfer, $datePay);
+
         for ($enrollment = 0; $enrollment < 12 ; $enrollment++) {
-            $value = $tribute + $rent_price - $adm_fee;
+            $value = $tribute + $rent_price - (($adm_fee/100) * $rent_price);
             if ($enrollment == 0){
                 $value = ($value / 30) * (30 - $contractCreate->ownerObject->day_transfer);
                 $value = round($value, 2);

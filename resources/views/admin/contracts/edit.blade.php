@@ -104,8 +104,8 @@
                                 </label>
                                 <label class="label">
                                     <span class="legend">Taxa de Administração:</span>
-                                    <input type="tel" name="adm_fee" class="mask-money"
-                                           placeholder="Valor da taxa de Administração"
+                                    <input type="text" name="adm_fee"  class="mask-percent"
+                                           placeholder="Taxa de Administração"
                                            value="{{ old('adm_fee') ?? $contract->adm_fee }}"/>
                                 </label>
                             </div>
