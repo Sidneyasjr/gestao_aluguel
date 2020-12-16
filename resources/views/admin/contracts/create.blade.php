@@ -40,15 +40,16 @@
                     <div id="parts">
                         <form action="{{ route('admin.contracts.store') }}" method="post" class="app_form">
                             @csrf
-
+                            <input type="hidden" name="property_persist" value="{{ old('property') }}">
                             <div class="label_g2">
                                 <label class="label">
                                     <span class="legend">Proprietário:</span>
                                     <select class="select2" name="owner"
                                             data-action="{{ route('admin.contracts.getDataOwner') }}">
-                                        <option value="0">Informe o Locatário</option>
+                                        <option value="">Informe o Locatário</option>
                                         @foreach($owners as $owner)
-                                            <option value="{{ $owner->id }}" {{ (old('owner') == $owner->id ? 'selected' : '') }}>{{ $owner->name }}
+                                            <option
+                                                value="{{ $owner->id }}" {{ (old('owner') == $owner->id ? 'selected' : '') }}>{{ $owner->name }}
                                                 ({{ $owner->email }})
                                             </option>
                                         @endforeach
@@ -59,7 +60,8 @@
                                     <select name="customer" class="select2">
                                         <option value="" selected>Informe o Locador</option>
                                         @foreach($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->name }}
+                                            <option
+                                                value="{{ $customer->id }}" {{ (old('customer') == $customer->id ? 'selected' : '') }}>{{ $customer->name }}
                                                 ({{ $customer->email }})
                                             </option>
                                         @endforeach
@@ -69,7 +71,8 @@
 
                             <label class="label">
                                 <span class="legend">Imóvel:</span>
-                                <select name="property" class="select2" data-action="{{ route('admin.contracts.getDataProperty') }}">
+                                <select name="property" class="select2"
+                                        data-action="{{ route('admin.contracts.getDataProperty') }}">
                                     <option value="">Não infromado</option>
                                 </select>
                             </label>
@@ -82,7 +85,7 @@
                                 </label>
                                 <label class="label">
                                     <span class="legend">Taxa de Administração:</span>
-                                    <input type="text" name="adm_fee"  class="mask-percent"
+                                    <input type="text" name="adm_fee" class="mask-percent"
                                            placeholder="Taxa de Administração" value="{{ old('adm_fee') }}"/>
                                 </label>
                             </div>
@@ -118,9 +121,14 @@
                             <label class="label">
                                 <span class="legend">Status do Contrato:</span>
                                 <select name="status" class="select2">
-                                    <option value="pending" {{ (old('status') === 'pending' ? 'selected' : '') }}>Pendente</option>
-                                    <option value="active" {{ (old('status') === 'active' ? 'selected' : '') }}>Ativo</option>
-                                    <option value="canceled" {{ (old('status') === 'canceled' ? 'selected' : '') }}>Cancelado</option>
+                                    <option value="pending" {{ (old('status') === 'pending' ? 'selected' : '') }}>
+                                        Pendente
+                                    </option>
+                                    <option value="active" {{ (old('status') === 'active' ? 'selected' : '') }}>Ativo
+                                    </option>
+                                    <option value="canceled" {{ (old('status') === 'canceled' ? 'selected' : '') }}>
+                                        Cancelado
+                                    </option>
                                 </select>
                             </label>
 
@@ -158,6 +166,7 @@
                         $('select[name="property"]').append($('<option>', {
                             value: value.id,
                             text: value.description,
+                            value: value.status,
                             selected: ($('input[name="property_persist"]').val() != 0 && $('input[name="property_persist"]').val() == value.id ? 'selected' : false)
                         }));
                     });
@@ -178,7 +187,7 @@
                 }, 'json');
             });
 
-            if($('select[name="owner"]').val() != 0) {
+            if ($('select[name="owner"]').val() != 0) {
                 var owner = $('select[name="owner"]');
                 $.post(owner.data('action'), {owner: owner.val()}, function (response) {
                     setFieldOwner(response);

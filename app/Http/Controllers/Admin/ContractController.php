@@ -213,7 +213,7 @@ class ContractController extends Controller
         } else {
 
 
-            $getProperties = $owner->properties()->get();
+            $getProperties = $owner->properties()->where('status', '=', 1)->get();
 
             $properties = [];
             foreach($getProperties as $property) {
@@ -221,7 +221,7 @@ class ContractController extends Controller
                     'id' => $property->id,
                     'description' => '#' . $property->id . ' ' . $property->street . ', ' .
                         $property->number . ' ' . $property->neighborhood . ' ' .
-                        $property->city . '/' . $property->state . ' (' . $property->zipcode . ')'
+                        $property->city . '/' . $property->state . ' (' . $property->zipcode . ')',
                 ];
             }
         }
