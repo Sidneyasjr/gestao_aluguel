@@ -1,13 +1,14 @@
-Gestão de Aluguel
+## 🚀 Tecnologias
 
-URL: https://www.sidneyandrade.com.br/
-usuario: admin@admin.com.br
-senha: teste
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-Serviços:
+- HTML
+- CSS
+- JavaScript
+- PHP 7
+- Laravel
+- MariaDB
 
--Front --HTML5 --CSS3/SASS -- Jquery
+## 💻 Projeto
 
--Back --PHP7 -- Laravel Framework --Apache
-
--Banco de Dados --MYSQL
+O Gestão de Aluguel é uma aplicação criada para controlar alugueis de imoveis.
